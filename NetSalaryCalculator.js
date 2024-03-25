@@ -3,16 +3,22 @@
 function calculateNetSalary(basicSalary,benefits){
     grossSalary = basicSalary + benefits
 
-    if ( grossSalary <= 24000){
+    nssfDeduction = 0.06 * basicSalary
+
+    taxableIncome= grossSalary - nssfDeduction
+
+    if ( taxableIncome <= 24000){
         taxRate= 0.10 
+        payee=taxableIncome*taxRate
     }
-    else if (grossSalary <= 32333){
+    else if (taxableIncome <= 32333){
         taxRate= 0.25
+        payee=(taxableIncome-24000)*taxRate+2400
     } 
-    else if (grossSalary >32333){
+    else if (taxableIncome >32333){
         taxRate= 0.30
+        payee=(taxableIncome-32333)*taxRate+2400+2083.25
     } 
-    payee = grossSalary * taxRate
 
     if (grossSalary <= 5999){
         nhif_deduction = 150 
@@ -62,14 +68,14 @@ function calculateNetSalary(basicSalary,benefits){
      else if (grossSalary <= 99999) {
         nhif_deduction = 1600
      }
-     else if (grossSalary >= 10000){
+     else if (grossSalary >= 100000){
         nhif_deduction = 1700
      }
-    nssfDeduction = 0.06 * basicSalary
+    
 
-    netSalary = grossSalary - payee - nhif_deduction - nssfDeduction
+    netSalary = taxableIncome - payee - nhif_deduction 
 
     return netSalary   
     }
 //input basic salary and benefits here
-    console.log(calculateNetSalary(,))
+    console.log(calculateNetSalary(0,0))
